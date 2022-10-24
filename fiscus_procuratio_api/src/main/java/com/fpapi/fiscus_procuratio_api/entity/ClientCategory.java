@@ -12,17 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class ClientCategories {
+public class ClientCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String category;
-    private Long number;
 
-    @OneToMany(mappedBy = "clientCategories")
+    @OneToMany(mappedBy = "clientCategory")
     @ToString.Exclude
     private List<Clients> clientsList;
 

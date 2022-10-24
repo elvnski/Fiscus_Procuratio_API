@@ -23,7 +23,7 @@ public class Clients {
 
     @ManyToOne
     @JoinColumn(name = "category", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CC_category"))
-    private ClientCategories clientCategories;
+    private ClientCategory clientCategory;
 
     private String phone;
     private String email;
