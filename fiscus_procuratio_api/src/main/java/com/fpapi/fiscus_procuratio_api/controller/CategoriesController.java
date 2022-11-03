@@ -4,9 +4,7 @@ import com.fpapi.fiscus_procuratio_api.entity.*;
 import com.fpapi.fiscus_procuratio_api.model.*;
 import com.fpapi.fiscus_procuratio_api.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CategoriesController {
@@ -25,13 +23,12 @@ public class CategoriesController {
     }
 
     /* CHANGES BUSINESS CATEGORY NAME */
-    @PostMapping("/categories/business/altername")
-    public String alterBusinessCategoryName(@RequestBody BusinessCategoryModel businessCategoryModel) {
+    @PutMapping("/categories/business/alter/{id}")
+    public String alterBusinessCategory(@PathVariable("id") Long id, @RequestBody BusinessCategoryModel businessCategoryModel) {
 
-        BusinessCategory businessCategory = categoriesService.findBusinessCategoryByName(businessCategoryModel.getCategory());
-        String newName = categoriesService.alterBusinessCategoryName(businessCategory, businessCategoryModel.getNewCategoryName()).getCategory();
+        BusinessCategory businessCategory = categoriesService.alterBusinessCategoryById(id, businessCategoryModel);
 
-        return "Business category name changed from: '" + businessCategoryModel.getCategory() + "' to: '" + newName + "'";
+        return "Business category with ID '" + id + "' name changed to '" + businessCategory.getCategory() + "'.";
     }
 
 
@@ -46,14 +43,14 @@ public class CategoriesController {
     }
 
     /* CHANGES INVENTORY CATEGORY NAME */
-    @PostMapping("/categories/inventory/altername")
-    public String alterInventoryCategoryName(@RequestBody InventoryCategoryModel inventoryCategoryModel) {
+    @PutMapping("/categories/inventory/alter/{id}")
+    public String alterInventoryCategory(@PathVariable("id") Long id, @RequestBody InventoryCategoryModel inventoryCategoryModel) {
 
-        InventoryCategory inventoryCategory = categoriesService.findInventoryCategoryByName(inventoryCategoryModel.getCategory());
-        String newName = categoriesService.alterInventoryCategoryName(inventoryCategory, inventoryCategoryModel.getNewCategoryName()).getCategory();
+        InventoryCategory inventoryCategory = categoriesService.alterInventoryCategoryById(id, inventoryCategoryModel);
 
-        return "Inventory category name changed from: '" + inventoryCategoryModel.getCategory() + "' to: '" + newName + "'";
+        return "Inventory category with ID '" + id + "' name changed to '" + inventoryCategory.getCategory() + "'";
     }
+
 
     /* ADDS A NEW CLIENT CATEGORY */
     @PostMapping("/categories/client/add")
@@ -65,15 +62,15 @@ public class CategoriesController {
         return "Client Category: '" + name + "', Saved Successfully!";
     }
 
-    /* CHANGES INVENTORY CATEGORY NAME */
-    @PostMapping("/categories/client/altername")
-    public String alterClientCategoryName(@RequestBody ClientCategoryModel clientCategoryModel) {
+    /* CHANGES CLIENT CATEGORY NAME */
+    @PutMapping("/categories/client/alter/{id}")
+    public String alterClientCategory(@PathVariable("id") Long id, @RequestBody ClientCategoryModel clientCategoryModel) {
 
-        ClientCategory clientCategory = categoriesService.findClientCategoryByName(clientCategoryModel.getCategory());
-        String newName = categoriesService.alterClientCategoryName(clientCategory, clientCategoryModel.getNewCategoryName()).getCategory();
+        ClientCategory clientCategory = categoriesService.alterClientCategoryById(id, clientCategoryModel);
 
-        return "Client category name changed from: '" + clientCategoryModel.getCategory() + "' to: '" + newName + "'";
+        return "Client category with ID '" + id + "' name changed to '" + clientCategory.getCategory() + "'";
     }
+
 
     /* ADDS A NEW LOAN CATEGORY */
     @PostMapping("/categories/loan/add")
@@ -86,14 +83,14 @@ public class CategoriesController {
     }
 
     /* CHANGES LOAN CATEGORY NAME */
-    @PostMapping("/categories/loan/altername")
-    public String alterLoanCategoryName(@RequestBody LoanCategoryModel loanCategoryModel) {
+    @PutMapping("/categories/loan/alter/{id}")
+    public String alterLoanCategory(@PathVariable("id") Long id, @RequestBody LoanCategoryModel loanCategoryModel) {
 
-        LoanCategory loanCategory = categoriesService.findLoanCategoryByName(loanCategoryModel.getCategory());
-        String newName = categoriesService.alterLoanCategoryName(loanCategory, loanCategoryModel.getNewCategoryName()).getCategory();
+        LoanCategory loanCategory = categoriesService.alterLoanCategoryById(id, loanCategoryModel);
 
-        return "Loan category name changed from: '" + loanCategoryModel.getCategory() + "' to: '" + newName + "'";
+        return "Loan category with ID '" + id + "' name changed to '" + loanCategory.getCategory() + "'";
     }
+
 
     /* ADDS A NEW PURCHASE CATEGORY */
     @PostMapping("/categories/purchase/add")
@@ -106,18 +103,13 @@ public class CategoriesController {
     }
 
     /* CHANGES PURCHASE CATEGORY NAME */
-    @PostMapping("categories/purchase/altername")
-    public String alterPurchaseCategoryName(@RequestBody PurchaseCategoryModel purchaseCategoryModel) {
+    @PutMapping("categories/purchase/alter/{id}")
+    public String alterPurchaseCategory(@PathVariable("id") Long id, @RequestBody PurchaseCategoryModel purchaseCategoryModel) {
 
-        PurchaseCategory purchaseCategory = categoriesService.findPurchaseCategoryByName(purchaseCategoryModel.getCategory());
-        String newName = categoriesService.alterPurchaseCategoryName(purchaseCategory, purchaseCategoryModel.getNewCategoryName()).getCategory();
+        PurchaseCategory purchaseCategory = categoriesService.alterPurchaseCategoryById(id, purchaseCategoryModel);
 
-        return "Purchase category name changed from: '" + purchaseCategoryModel.getCategory() + "' to: '" + newName + "'";
+        return "Purchase category with ID '" + id + "' name changed to '" + purchaseCategory.getCategory() + "'";
     }
-
-
-
-
 
 
 

@@ -3,6 +3,7 @@ package com.fpapi.fiscus_procuratio_api.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -22,13 +23,13 @@ public class Clients {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "category", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CC_category"))
+    @JoinColumn(name = "category", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CC_C_category"))
     private ClientCategory clientCategory;
 
     private String phone;
     private String email;
     private String address;
-    private String noOfSales;
+    private BigDecimal noOfSales;
 
     @OneToMany(mappedBy = "clients")
     @ToString.Exclude

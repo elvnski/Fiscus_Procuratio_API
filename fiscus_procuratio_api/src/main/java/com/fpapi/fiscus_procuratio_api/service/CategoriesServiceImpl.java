@@ -6,6 +6,8 @@ import com.fpapi.fiscus_procuratio_api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class CategoriesServiceImpl implements CategoriesService{
 
@@ -35,19 +37,6 @@ public class CategoriesServiceImpl implements CategoriesService{
         return businessCategory;
     }
 
-    @Override
-    public BusinessCategory findBusinessCategoryByName(String category) {
-
-        return businessCategoryRepository.findByCategory(category);
-    }
-
-    @Override
-    public BusinessCategory alterBusinessCategoryName(BusinessCategory businessCategory, String newCategoryName) {
-        businessCategory.setCategory(newCategoryName);
-        businessCategoryRepository.save(businessCategory);
-
-        return businessCategory;
-    }
 
     @Override
     public InventoryCategory addInventoryCategory(InventoryCategoryModel inventoryCategoryModel) {
@@ -55,20 +44,6 @@ public class CategoriesServiceImpl implements CategoriesService{
         InventoryCategory inventoryCategory = new InventoryCategory();
         inventoryCategory.setCategory(inventoryCategoryModel.getCategory());
 
-        inventoryCategoryRepository.save(inventoryCategory);
-
-        return inventoryCategory;
-    }
-
-    @Override
-    public InventoryCategory findInventoryCategoryByName(String category) {
-        return inventoryCategoryRepository.findByCategory(category);
-    }
-
-    @Override
-    public InventoryCategory alterInventoryCategoryName(InventoryCategory inventoryCategory, String newCategoryName) {
-
-        inventoryCategory.setCategory(newCategoryName);
         inventoryCategoryRepository.save(inventoryCategory);
 
         return inventoryCategory;
@@ -85,19 +60,6 @@ public class CategoriesServiceImpl implements CategoriesService{
         return clientCategory;
     }
 
-    @Override
-    public ClientCategory findClientCategoryByName(String category) {
-        return clientCategoryRepository.findByCategory(category);
-    }
-
-    @Override
-    public ClientCategory alterClientCategoryName(ClientCategory clientCategory, String newCategoryName) {
-
-        clientCategory.setCategory(newCategoryName);
-        clientCategoryRepository.save(clientCategory);
-
-        return clientCategory;
-    }
 
     @Override
     public LoanCategory addLoanCategory(LoanCategoryModel loanCategoryModel) {
@@ -105,20 +67,6 @@ public class CategoriesServiceImpl implements CategoriesService{
         LoanCategory loanCategory = new LoanCategory();
         loanCategory.setCategory(loanCategoryModel.getCategory());
 
-        loanCategoryRepository.save(loanCategory);
-
-        return loanCategory;
-    }
-
-    @Override
-    public LoanCategory findLoanCategoryByName(String category) {
-        return loanCategoryRepository.findByCategory(category);
-    }
-
-    @Override
-    public LoanCategory alterLoanCategoryName(LoanCategory loanCategory, String newCategoryName) {
-
-        loanCategory.setCategory(newCategoryName);
         loanCategoryRepository.save(loanCategory);
 
         return loanCategory;
@@ -136,15 +84,93 @@ public class CategoriesServiceImpl implements CategoriesService{
     }
 
     @Override
-    public PurchaseCategory findPurchaseCategoryByName(String category) {
-        return purchaseCategoryRepository.findByCategory(category);
+    public InventoryCategory alterInventoryCategoryById(Long id, InventoryCategoryModel inventoryCategoryModel) {
+
+        InventoryCategory inventoryCategory = null;
+
+        if(inventoryCategoryRepository.findById(id).isPresent()){
+
+            inventoryCategory = inventoryCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(inventoryCategoryModel.getNewCategoryName())){
+                inventoryCategory.setCategory(inventoryCategoryModel.getNewCategoryName());
+            }
+
+            inventoryCategoryRepository.save(inventoryCategory);
+        }
+
+        return inventoryCategory;
     }
 
     @Override
-    public PurchaseCategory alterPurchaseCategoryName(PurchaseCategory purchaseCategory, String newCategoryName) {
+    public BusinessCategory alterBusinessCategoryById(Long id, BusinessCategoryModel businessCategoryModel) {
 
-        purchaseCategory.setCategory(newCategoryName);
-        purchaseCategoryRepository.save(purchaseCategory);
+        BusinessCategory businessCategory = null;
+
+        if (businessCategoryRepository.findById(id).isPresent()){
+            businessCategory = businessCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(businessCategoryModel.getNewCategoryName())) {
+                businessCategory.setCategory(businessCategoryModel.getNewCategoryName());
+            }
+
+            businessCategoryRepository.save(businessCategory);
+        }
+
+        return businessCategory;
+    }
+
+    @Override
+    public ClientCategory alterClientCategoryById(Long id, ClientCategoryModel clientCategoryModel) {
+
+        ClientCategory clientCategory = null;
+
+        if (clientCategoryRepository.findById(id).isPresent()){
+
+            clientCategory = clientCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(clientCategoryModel.getNewCategoryName())){
+                clientCategory.setCategory(clientCategoryModel.getNewCategoryName());
+            }
+
+            clientCategoryRepository.save(clientCategory);
+        }
+
+        return clientCategory;
+    }
+
+    @Override
+    public LoanCategory alterLoanCategoryById(Long id, LoanCategoryModel loanCategoryModel) {
+
+        LoanCategory loanCategory = null;
+
+        if (loanCategoryRepository.findById(id).isPresent()){
+            loanCategory = loanCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(loanCategoryModel.getNewCategoryName())){
+                loanCategory.setCategory(loanCategoryModel.getNewCategoryName());
+            }
+
+            loanCategoryRepository.save(loanCategory);
+        }
+
+        return loanCategory;
+    }
+
+    @Override
+    public PurchaseCategory alterPurchaseCategoryById(Long id, PurchaseCategoryModel purchaseCategoryModel) {
+
+        PurchaseCategory purchaseCategory = null;
+
+        if (purchaseCategoryRepository.findById(id).isPresent()){
+            purchaseCategory = purchaseCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(purchaseCategoryModel.getNewCategoryName())){
+                purchaseCategory.setCategory(purchaseCategoryModel.getNewCategoryName());
+            }
+
+            purchaseCategoryRepository.save(purchaseCategory);
+        }
 
         return purchaseCategory;
     }
