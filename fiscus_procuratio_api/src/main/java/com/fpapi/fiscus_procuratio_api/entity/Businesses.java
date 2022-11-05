@@ -36,6 +36,9 @@ public class Businesses {
     @OneToMany(mappedBy = "businesses")
     private List<Purchases> purchasesList;
 
+    @OneToOne(mappedBy = "business", fetch = FetchType.EAGER)
+    private InvoicesOwed invoicesOwed;
+
 
 
 }

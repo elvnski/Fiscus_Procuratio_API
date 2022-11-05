@@ -18,8 +18,6 @@ public class GeneralLedger {
     @Id
     private String transactionNumber;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Date date;
     private String accountType;
     private String accountName;

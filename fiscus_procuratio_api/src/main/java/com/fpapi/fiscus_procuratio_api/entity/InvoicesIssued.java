@@ -16,10 +16,6 @@ import java.util.List;
 @Entity
 public class InvoicesIssued {
 
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String invoiceNumber;
     private Date issueDate;
@@ -27,7 +23,10 @@ public class InvoicesIssued {
     private BigDecimal invoiceAmount;
     private BigDecimal discount;
     private String details;
-    private String entity;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "clientId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_II_C_clientId"))
+    private Clients client;
 
 
     @OneToMany(mappedBy = "invoicesIssued")

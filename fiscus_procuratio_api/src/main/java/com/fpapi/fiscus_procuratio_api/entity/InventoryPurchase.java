@@ -15,9 +15,6 @@ import java.util.Date;
 @Entity
 public class InventoryPurchase {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String inventoryPurchaseNumber;
 

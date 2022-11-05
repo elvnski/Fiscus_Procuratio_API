@@ -15,11 +15,6 @@ import java.util.List;
 @Builder
 @Entity
 public class Inventory {
-
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String inventoryNumber;
 

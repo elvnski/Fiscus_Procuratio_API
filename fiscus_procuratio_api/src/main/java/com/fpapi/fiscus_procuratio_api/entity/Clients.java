@@ -44,4 +44,7 @@ public class Clients {
     @ToString.Exclude
     private List<CashReceipts> cashReceiptsList;
 
+    @OneToOne(mappedBy = "client", fetch = FetchType.EAGER)
+    private InvoicesIssued invoicesIssued;
+
 }

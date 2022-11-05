@@ -16,19 +16,17 @@ import java.util.List;
 @Entity
 public class InvoicesOwed {
 
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String invoiceNumber;
     private Date issueDate;
     private Date paymentDate;
     private BigDecimal invoiceAmount;
     private BigDecimal discount;
-    private String entity;
     private String details;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_IO_BusinessId"))
+    private Businesses business;
 
     @OneToMany(mappedBy = "invoicesOwed")
     @ToString.Exclude

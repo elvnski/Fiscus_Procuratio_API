@@ -15,10 +15,6 @@ import java.util.List;
 @Builder
 @Entity
 public class Loans {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String loanNumber;
 

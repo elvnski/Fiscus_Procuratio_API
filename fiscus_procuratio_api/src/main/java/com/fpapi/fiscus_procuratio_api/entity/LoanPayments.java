@@ -15,9 +15,6 @@ import java.util.Date;
 @Entity
 public class LoanPayments {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String paymentNumber;
 

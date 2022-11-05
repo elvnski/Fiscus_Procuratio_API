@@ -13,10 +13,6 @@ import java.math.BigDecimal;
 @Builder
 @Entity
 public class Sales {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Id
     private String saleNumber;
 
