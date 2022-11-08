@@ -34,7 +34,7 @@ public class AccountsController {
 
         AccountsPayablePayments accountsPayablePayments = accountsService.recordAccountsPayablePayment(accountsPayablePaymentsModel);
 
-        return "New Accounts Payable Payment No '" + accountsPayablePayments.getPaymentNumber() + "' of KES '" + accountsPayablePayments.getPayment() + "' Has Been Recorded Successfully!";
+        return "New Accounts Payable Payment No '" + accountsPayablePayments.getPaymentNumber() + "' of KES " + accountsPayablePayments.getPayment() + " Has Been Recorded Successfully!";
     }
 
 
