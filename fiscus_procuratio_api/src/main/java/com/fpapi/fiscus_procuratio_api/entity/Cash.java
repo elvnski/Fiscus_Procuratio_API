@@ -26,7 +26,9 @@ public class Cash {
     private String sourceAccount;
     private String destinationAccount;
     private String details;
-    private BigDecimal amount;
+    private BigDecimal credit;
+    private BigDecimal debit;
+    private BigDecimal balance;
 
 
     @OneToOne(mappedBy = "cash", fetch = FetchType.EAGER)

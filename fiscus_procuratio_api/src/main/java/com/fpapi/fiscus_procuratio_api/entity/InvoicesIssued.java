@@ -36,9 +36,7 @@ public class InvoicesIssued {
     @OneToOne(mappedBy = "invoicesIssued", fetch = FetchType.EAGER)
     private AccountsReceivable accountsReceivable;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_INVI_transactionNumber"))
-    private GeneralLedger generalLedger;
+
 
 
 

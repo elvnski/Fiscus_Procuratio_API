@@ -16,8 +16,7 @@ import java.util.Date;
 public class AccountsReceivableReceipts {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String receiptNumber;
 
     private Date date;
 
@@ -27,7 +26,6 @@ public class AccountsReceivableReceipts {
 
     private BigDecimal paymentReceived;
     private BigDecimal balanceDue;
-    private String debitedAccount;
 
 
 

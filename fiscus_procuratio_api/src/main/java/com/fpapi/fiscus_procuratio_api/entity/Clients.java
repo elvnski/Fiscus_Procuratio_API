@@ -36,7 +36,7 @@ public class Clients {
     private List<Sales> salesList;
 
 
-    @OneToMany(mappedBy = "clients")
+    @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private List<AccountsReceivable> accountsReceivableList;
 

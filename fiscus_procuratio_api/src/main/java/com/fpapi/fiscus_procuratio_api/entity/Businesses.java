@@ -34,10 +34,19 @@ public class Businesses {
     private BigDecimal noOfSales;
 
     @OneToMany(mappedBy = "businesses")
+    @ToString.Exclude
     private List<Purchases> purchasesList;
 
     @OneToOne(mappedBy = "business", fetch = FetchType.EAGER)
     private InvoicesOwed invoicesOwed;
+
+    @OneToMany(mappedBy = "business")
+    @ToString.Exclude
+    private List<CashPayments> cashPaymentsList;
+
+    @OneToMany(mappedBy = "business")
+    @ToString.Exclude
+    private List<AccountsPayable> accountsPayableList;
 
 
 

@@ -37,10 +37,6 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
     @Override
     public InvoicesIssued addInvoicesIssued(InvoicesIssuedModel invoicesIssuedModel) {
 
-        GeneralLedgerModel generalLedgerModel = new GeneralLedgerModel();
-        GeneralLedger generalLedger = generalLedgerModel.createGeneralLedgerEntry("Invoices Issued", "Asset", invoicesIssuedModel.getInvoiceAmount(), BigDecimal.valueOf(0.0));
-        generalLedgerRepository.save(generalLedger);
-
         InvoicesIssued invoicesIssued = new InvoicesIssued();
 
         invoicesIssued.setInvoiceNumber(generateInvoiceNumber());
@@ -50,7 +46,6 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
         invoicesIssued.setInvoiceAmount(invoicesIssuedModel.getInvoiceAmount());
         invoicesIssued.setDiscount(invoicesIssuedModel.getDiscount());
         invoicesIssued.setDetails(invoicesIssuedModel.getDetails());
-        invoicesIssued.setGeneralLedger(generalLedger);
 
         invoicesIssuedRepository.save(invoicesIssued);
 
@@ -59,10 +54,6 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
 
     @Override
     public InvoicesOwed addInvoicesOwed(InvoicesOwedModel invoicesOwedModel) {
-
-        GeneralLedgerModel generalLedgerModel = new GeneralLedgerModel();
-        GeneralLedger generalLedger = generalLedgerModel.createGeneralLedgerEntry("Invoices Owed", "Liability", BigDecimal.valueOf(0.0), invoicesOwedModel.getInvoiceAmount());
-        generalLedgerRepository.save(generalLedger);
 
         InvoicesOwed invoicesOwed = new InvoicesOwed();
 
@@ -73,7 +64,6 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
         invoicesOwed.setInvoiceAmount(invoicesOwedModel.getInvoiceAmount());
         invoicesOwed.setDiscount(invoicesOwedModel.getDiscount());
         invoicesOwed.setDetails(invoicesOwedModel.getDetails());
-        invoicesOwed.setGeneralLedger(generalLedger);
 
         invoicesOwedRepository.save(invoicesOwed);
 

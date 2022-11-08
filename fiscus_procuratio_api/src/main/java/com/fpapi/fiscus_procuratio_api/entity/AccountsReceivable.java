@@ -29,7 +29,7 @@ public class AccountsReceivable {
 
     @ManyToOne
     @JoinColumn(name = "clientId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CL_AR_client_id"))
-    private Clients clients;
+    private Clients client;
 
 
     private String description;

@@ -31,7 +31,10 @@ public class AccountsPayable {
     @JoinColumn(name = "loanNumber", referencedColumnName = "loanNumber", foreignKey = @ForeignKey(name = "FK_L_AP_loanNumber"))
     private Loans loans;
 
-    private String supplierName;
+    @ManyToOne
+    @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_AP_businessId"))
+    private Businesses business;
+
     private String description;
     private BigDecimal invoiceAmount;
     private BigDecimal balance;
@@ -46,18 +49,5 @@ public class AccountsPayable {
     @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_AP_transactionNumber"))
     private GeneralLedger generalLedger;
 
-    /* CONSTRUCTOR FOR REGULAR ACCOUNTS PAYABLE */
 
-    public AccountsPayable(Date date, InvoicesOwed invoicesOwed, Loans loans, String supplierName, String description, BigDecimal invoiceAmount, BigDecimal balance, BigDecimal discount, Date dueDate, GeneralLedger generalLedger) {
-        this.date = date;
-        this.invoicesOwed = invoicesOwed;
-        this.loans = loans;
-        this.supplierName = supplierName;
-        this.description = description;
-        this.invoiceAmount = invoiceAmount;
-        this.balance = balance;
-        this.discount = discount;
-        this.dueDate = dueDate;
-        this.generalLedger = generalLedger;
-    }
 }

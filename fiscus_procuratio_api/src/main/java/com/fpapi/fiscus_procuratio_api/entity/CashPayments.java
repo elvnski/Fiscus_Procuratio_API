@@ -31,9 +31,11 @@ public class CashPayments {
 
     private BigDecimal cashPaid;
     private BigDecimal invoiceBalance;
-
-    private String entity;
     private String details;
+
+    @ManyToOne
+    @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_CP_businessId"))
+    private Businesses business;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cashTransactionNumber", referencedColumnName = "cashTransactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_C_CP_cashTransactionNumber"))

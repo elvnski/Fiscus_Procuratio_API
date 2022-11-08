@@ -10,6 +10,7 @@ import com.fpapi.fiscus_procuratio_api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Service
@@ -38,6 +39,7 @@ public class EntitiesServiceImpl implements EntitiesService{
         banks.setPhone(banksModel.getPhone());
         banks.setEmail(banksModel.getEmail());
         banks.setAddress(banksModel.getAddress());
+        banks.setNoOfLoans(BigDecimal.valueOf(0.0));
 
         banksRepository.save(banks);
 
@@ -81,6 +83,7 @@ public class EntitiesServiceImpl implements EntitiesService{
         business.setPhone(businessesModel.getPhone());
         business.setEmail(businessesModel.getEmail());
         business.setAddress(businessesModel.getAddress());
+        business.setNoOfSales(BigDecimal.valueOf(0.0));
 
         businessesRepository.save(business);
 
@@ -129,6 +132,7 @@ public class EntitiesServiceImpl implements EntitiesService{
         client.setPhone(clientsModel.getPhone());
         client.setEmail(clientsModel.getEmail());
         client.setAddress(clientsModel.getAddress());
+        client.setNoOfSales(BigDecimal.valueOf(0.0));
 
         clientsRepository.save(client);
 
