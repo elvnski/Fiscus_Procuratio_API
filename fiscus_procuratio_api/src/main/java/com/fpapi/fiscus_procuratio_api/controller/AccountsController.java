@@ -3,9 +3,11 @@ package com.fpapi.fiscus_procuratio_api.controller;
 import com.fpapi.fiscus_procuratio_api.entity.AccountsPayable;
 import com.fpapi.fiscus_procuratio_api.entity.AccountsPayablePayments;
 import com.fpapi.fiscus_procuratio_api.entity.AccountsReceivable;
+import com.fpapi.fiscus_procuratio_api.entity.AccountsReceivableReceipts;
 import com.fpapi.fiscus_procuratio_api.model.AccountsPayableModel;
 import com.fpapi.fiscus_procuratio_api.model.AccountsPayablePaymentsModel;
 import com.fpapi.fiscus_procuratio_api.model.AccountsReceivableModel;
+import com.fpapi.fiscus_procuratio_api.model.AccountsReceivableReceiptsModel;
 import com.fpapi.fiscus_procuratio_api.service.AccountsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +49,17 @@ public class AccountsController {
     }
 
 
+    @PostMapping("/accounts/receivable/receipt")
+    public String recordAccountsReceivableReceipts(@RequestBody AccountsReceivableReceiptsModel accountsReceivableReceiptsModel){
+
+        AccountsReceivableReceipts accountsReceivableReceipts = accountsService.recordAccountsReceivableReceipt(accountsReceivableReceiptsModel);
+
+        return "New Accounts Receivable Payment No '" + accountsReceivableReceipts.getReceiptNumber() + "' of KES " + accountsReceivableReceipts.getPaymentReceived() + " Has Been Recorded Successfully!";
+    }
 
 
 
-}
+
+
+
+    }

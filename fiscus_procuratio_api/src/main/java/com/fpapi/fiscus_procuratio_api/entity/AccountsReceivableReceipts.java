@@ -25,7 +25,6 @@ public class AccountsReceivableReceipts {
     private AccountsReceivable accountsReceivable;
 
     private BigDecimal paymentReceived;
-    private BigDecimal balanceDue;
 
 
 

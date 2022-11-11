@@ -19,10 +19,9 @@ import java.util.Date;
 public class AmortizationGenerator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentNo;
 
-    private Date paymentDate;
+    private java.sql.Date paymentDate;
     private BigDecimal startingBalance;
     private BigDecimal scheduledPayment;
     private BigDecimal extraPayment;

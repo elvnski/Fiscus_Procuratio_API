@@ -2,6 +2,7 @@ package com.fpapi.fiscus_procuratio_api.service;
 
 import com.fpapi.fiscus_procuratio_api.entity.Cash;
 import com.fpapi.fiscus_procuratio_api.entity.GeneralLedger;
+import com.fpapi.fiscus_procuratio_api.exceptions.CashOverdrawException;
 import com.fpapi.fiscus_procuratio_api.model.CashModel;
 import com.fpapi.fiscus_procuratio_api.model.GeneralLedgerModel;
 import com.fpapi.fiscus_procuratio_api.repository.CashRepository;
@@ -12,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CashServiceImpl implements CashService{
@@ -24,11 +23,11 @@ public class CashServiceImpl implements CashService{
     @Autowired
     private GeneralLedgerRepository generalLedgerRepository;
 
+    @Autowired
+    private GeneralLedgerService generalLedgerService;
+
     @Override
     public Cash depositCash(CashModel cashModel) {
-
-        GeneralLedger generalLedger = new GeneralLedgerModel().createGeneralLedgerEntry("Cash", "Asset", cashModel.getAmount(), BigDecimal.valueOf(0.0));
-        generalLedgerRepository.save(generalLedger);
 
         BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
 
@@ -36,6 +35,8 @@ public class CashServiceImpl implements CashService{
             latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
         }
 
+
+        GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Cash", "Asset", cashModel.getDebit(), BigDecimal.valueOf(0.0)));
 
         new CashModel();
         Cash cash = Cash.builder()
@@ -46,14 +47,73 @@ public class CashServiceImpl implements CashService{
                 .destinationAccount(cashModel.getDestinationAccount())
                 .details(cashModel.getDetails())
                 .credit(BigDecimal.valueOf(0.0))
-                .debit(cashModel.getAmount())
-                .balance(latestCashBalance.add(cashModel.getAmount()))
+                .debit(cashModel.getDebit())
+                .balance(latestCashBalance.add(cashModel.getDebit()))
                 .build();
 
 
         cashRepository.save(cash);
 
         return cash;
+    }
+
+    @Override
+    public Cash spendCash(CashModel cashModel) {
+
+        generalLedgerService.recordTransaction(new GeneralLedgerModel("Cash", "Asset", cashModel.getDebit(), cashModel.getCredit()));
+
+        Cash cash = Cash.builder()
+                .generalLedger(cashModel.getGeneralLedger())
+                .cashTransactionNumber(generateCashTransactionNumber())
+                .date(getDate())
+                .sourceAccount(cashModel.getSourceAccount())
+                .destinationAccount(cashModel.getDestinationAccount())
+                .details(cashModel.getDetails())
+                .credit(cashModel.getCredit())
+                .debit(cashModel.getDebit())
+                .balance((cashModel.getLatestCashBalance().add(cashModel.getDebit())).subtract(cashModel.getCredit()))
+                .build();
+
+        cashRepository.save(cash);
+
+        return cash;
+    }
+
+    @Override
+    public void checkForCashOverdraw(BigDecimal spendingAmount) throws CashOverdrawException {
+
+        BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
+
+        if (!cashRepository.findAll().isEmpty()) {
+            latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
+
+            if(latestCashBalance.subtract(spendingAmount).compareTo(BigDecimal.valueOf(200000.00)) < 0) {
+                throw new CashOverdrawException("Cannot process Cash Spending transaction of KES " + spendingAmount + " as it exceeds the overdraw limits.");
+            }
+        }
+
+    }
+
+    public static String generateCashTransactionNumber() {
+
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(18);
+
+        for (int i = 0; i < 18; i++) {
+            // generate a random number between 0 to AlphaNumericString variable length
+            int index = (int)(AlphaNumericString.length() * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString.charAt(index));
+
+        }
+
+        return "CSH-" + sb;
     }
 
     private Date getDate() {

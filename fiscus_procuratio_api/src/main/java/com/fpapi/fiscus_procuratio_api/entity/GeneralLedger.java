@@ -41,12 +41,6 @@ public class GeneralLedger {
     private Cash cash;
 
     @OneToOne(mappedBy = "generalLedger", fetch = FetchType.EAGER)
-    private CashPayments cashPayments;
-
-    @OneToOne(mappedBy = "generalLedger", fetch = FetchType.EAGER)
-    private CashReceipts cashReceipts;
-
-    @OneToOne(mappedBy = "generalLedger", fetch = FetchType.EAGER)
     private LoanPayments loanPayments;
 
     @OneToOne(mappedBy = "generalLedger", fetch = FetchType.EAGER)

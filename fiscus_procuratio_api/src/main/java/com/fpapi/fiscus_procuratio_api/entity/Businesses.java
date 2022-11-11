@@ -40,14 +40,14 @@ public class Businesses {
     @OneToOne(mappedBy = "business", fetch = FetchType.EAGER)
     private InvoicesOwed invoicesOwed;
 
-    @OneToMany(mappedBy = "business")
-    @ToString.Exclude
-    private List<CashPayments> cashPaymentsList;
 
     @OneToMany(mappedBy = "business")
     @ToString.Exclude
     private List<AccountsPayable> accountsPayableList;
 
 
+    @OneToMany(mappedBy = "business")
+    @ToString.Exclude
+    private List<InventoryPurchase> inventoryPurchaseList;
 
 }

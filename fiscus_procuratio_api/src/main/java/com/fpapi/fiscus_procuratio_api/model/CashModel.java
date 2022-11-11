@@ -16,12 +16,19 @@ import java.util.Date;
 @AllArgsConstructor
 public class CashModel {
 
+    /* FOR USE IN SERVICES */
+    private GeneralLedger generalLedger;
 
-
+    /* FOR REST ENDPOINT */
     private String sourceAccount;
     private String destinationAccount;
     private String details;
-    private BigDecimal amount;
+    private BigDecimal debit;
+    private BigDecimal credit;
+
+    /* FOR USE IN SERVICES */
+    private BigDecimal latestCashBalance;
+
 
     public Cash createCashEntry(GeneralLedger generalLedger, String sourceAccount, String destinationAccount, String details, BigDecimal debit, BigDecimal credit, BigDecimal latestCashBalance){
 
@@ -39,7 +46,7 @@ public class CashModel {
     }
 
 
-    static String generateCashTransactionNumber() {
+    public static String generateCashTransactionNumber() {
 
         // chose a Character random from this String
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -58,7 +65,7 @@ public class CashModel {
 
         }
 
-        return sb.toString();
+        return "CSH-" + sb;
     }
 
     private Date getDate() {

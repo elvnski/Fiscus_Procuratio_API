@@ -26,6 +26,7 @@ public class Inventory {
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_IC_I_categoryId"))
     private InventoryCategory inventoryCategory;
 
+
     private BigDecimal currentQuantity;
     private BigDecimal reorderLevel;
     private BigDecimal stockingPrice;
@@ -34,7 +35,12 @@ public class Inventory {
     private BigDecimal totalItemStockValue;
 
     @OneToMany(mappedBy = "inventory")
+    @ToString.Exclude
     private List<Sales> salesList;
+
+    @OneToMany(mappedBy = "inventory")
+    @ToString.Exclude
+    private List<InventoryPurchase> inventoryPurchaseList;
 
 
 }

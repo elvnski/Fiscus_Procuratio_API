@@ -1,6 +1,7 @@
 package com.fpapi.fiscus_procuratio_api.service;
 
 import com.fpapi.fiscus_procuratio_api.entity.*;
+import com.fpapi.fiscus_procuratio_api.exceptions.CashOverdrawException;
 import com.fpapi.fiscus_procuratio_api.model.*;
 import com.fpapi.fiscus_procuratio_api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class AccountsServiceImpl implements AccountsService{
@@ -45,14 +45,23 @@ public class AccountsServiceImpl implements AccountsService{
     @Autowired
     private AccountsPayablePaymentsRepository accountsPayablePaymentsRepository;
 
+    @Autowired
+    private AccountsReceivableReceiptsRepository accountsReceivableReceiptsRepository;
+
+    @Autowired
+    private CashService cashService;
+
+    @Autowired
+    private GeneralLedgerService generalLedgerService;
+
+
     @Override
     public AccountsPayable recordAccountsPayable(AccountsPayableModel accountsPayableModel) {
 
         InvoicesOwed invoicesOwed = invoicesOwedRepository.findById(accountsPayableModel.getInvoiceNumber()).get();
 
-        GeneralLedger generalLedger = new GeneralLedgerModel().createGeneralLedgerEntry("Accounts Payable", "Liability", BigDecimal.valueOf(0.00),
-                invoicesOwed.getInvoiceAmount());
-        generalLedgerRepository.save(generalLedger);
+        GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Accounts Payable", "Liability", BigDecimal.valueOf(0.00),
+                invoicesOwed.getInvoiceAmount()));
 
         AccountsPayable accountsPayable = new AccountsPayable();
 
@@ -83,8 +92,7 @@ public class AccountsServiceImpl implements AccountsService{
 
         InvoicesIssued invoicesIssued = invoicesIssuedRepository.findById(accountsReceivableModel.getInvoiceNumber()).get();
 
-        GeneralLedger generalLedger = new GeneralLedgerModel().createGeneralLedgerEntry("Accounts Receivable", "Asset", invoicesIssued.getInvoiceAmount(), BigDecimal.valueOf(0.00));
-        generalLedgerRepository.save(generalLedger);
+        GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Accounts Receivable", "Asset", invoicesIssued.getInvoiceAmount(), BigDecimal.valueOf(0.00)));
 
         AccountsReceivable accountsReceivable = AccountsReceivable.builder()
                 .generalLedger(generalLedger)
@@ -106,11 +114,16 @@ public class AccountsServiceImpl implements AccountsService{
     @Override
     public AccountsPayablePayments recordAccountsPayablePayment(AccountsPayablePaymentsModel accountsPayablePaymentsModel) {
 
+        try {
+            cashService.checkForCashOverdraw(accountsPayablePaymentsModel.getPayment());
+        } catch (CashOverdrawException e) {
+            throw new RuntimeException(e);
+        }
+
         AccountsPayable accountsPayable = accountsPayableRepository.findById(accountsPayablePaymentsModel.getAccountsPayableId()).get();
 
-        GeneralLedger generalLedger = new GeneralLedgerModel().createGeneralLedgerEntry("Accounts Payable",
-                "Liability", accountsPayablePaymentsModel.getPayment(), BigDecimal.valueOf(0.0));
-        generalLedgerRepository.save(generalLedger);
+        GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Accounts Payable",
+                "Liability", accountsPayablePaymentsModel.getPayment(), BigDecimal.valueOf(0.0)));
 
 
         BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
@@ -119,16 +132,15 @@ public class AccountsServiceImpl implements AccountsService{
             latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
         }
 
-        Cash cash = new CashModel().createCashEntry(generalLedger, "Cash", "Accounts Payable", accountsPayablePaymentsModel.getDetails(), BigDecimal.valueOf(0.0),
-                accountsPayablePaymentsModel.getPayment(), latestCashBalance);
-        cashRepository.save(cash);
+        Cash cash = cashService.spendCash(new CashModel(generalLedger, "Cash", "Accounts Payable", accountsPayablePaymentsModel.getDetails(), BigDecimal.valueOf(0.0),
+                accountsPayablePaymentsModel.getPayment(), latestCashBalance));
 
 
         AccountsPayablePayments accountsPayablePayments = AccountsPayablePayments.builder()
                 .generalLedger(generalLedger)
                 .cash(cash)
                 .accountsPayable(accountsPayable)
-                .paymentNumber(generatePaymentNumber())
+                .paymentNumber("APP-"+generatePaymentNumber())
                 .date(getDate())
                 .payment(accountsPayablePaymentsModel.getPayment())
                 .build();
@@ -140,6 +152,42 @@ public class AccountsServiceImpl implements AccountsService{
 
         return accountsPayablePayments;
     }
+
+    @Override
+    public AccountsReceivableReceipts recordAccountsReceivableReceipt(AccountsReceivableReceiptsModel accountsReceivableReceiptsModel) {
+
+        AccountsReceivable accountsReceivable = accountsReceivableRepository.findById(accountsReceivableReceiptsModel.getAccountsReceivableId()).get();
+
+        GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Accounts Receivable",
+                "Asset", BigDecimal.valueOf(0.0), accountsReceivableReceiptsModel.getPayment()));
+
+
+        BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
+        if (!cashRepository.findAll().isEmpty()) {
+            latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
+        }
+
+        Cash cash = cashService.depositCash(new CashModel(generalLedger, accountsReceivableReceiptsModel.getClientName(), "Accounts Receivable",
+                accountsReceivableReceiptsModel.getDetails(), accountsReceivableReceiptsModel.getPayment(), BigDecimal.valueOf(0.0), latestCashBalance));
+
+        AccountsReceivableReceipts accountsReceivableReceipts = AccountsReceivableReceipts.builder()
+                .generalLedger(generalLedger)
+                .cash(cash)
+                .accountsReceivable(accountsReceivable)
+                .receiptNumber("ARR-"+generatePaymentNumber())
+                .date(getDate())
+                .paymentReceived(accountsReceivableReceiptsModel.getPayment())
+                .build();
+        accountsReceivableReceiptsRepository.save(accountsReceivableReceipts);
+
+        BigDecimal accountsReceivableBalance = accountsReceivable.getBalance().subtract(accountsReceivableReceiptsModel.getPayment());
+        accountsReceivable.setBalance(accountsReceivableBalance);
+        accountsReceivableRepository.save(accountsReceivable);
+
+        return accountsReceivableReceipts;
+    }
+
+
 
     private Date getDate() {
         Calendar calendar = Calendar.getInstance();

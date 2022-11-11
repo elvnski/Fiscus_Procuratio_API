@@ -28,9 +28,6 @@ public class InvoicesOwed {
     @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_IO_BusinessId"))
     private Businesses business;
 
-    @OneToMany(mappedBy = "invoicesOwed")
-    @ToString.Exclude
-    private List<CashPayments> cashPaymentsList;
 
     @OneToOne(mappedBy = "invoicesOwed", fetch = FetchType.EAGER)
     private AccountsPayable accountsPayable;

@@ -1,16 +1,25 @@
 package com.fpapi.fiscus_procuratio_api.model;
 
 import com.fpapi.fiscus_procuratio_api.entity.GeneralLedger;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GeneralLedgerModel {
 
+    private String accountName;
+    private String accountType;
+    private BigDecimal debit;
+    private BigDecimal credit;
 
-    public GeneralLedger createGeneralLedgerEntry(String accountName, String accountType, BigDecimal debit, BigDecimal credit){
+    public GeneralLedger recordTransaction(String accountName, String accountType, BigDecimal debit, BigDecimal credit){
 
         GeneralLedger generalLedger = new GeneralLedger();
         generalLedger.setTransactionNumber(getTransactionNumber());
@@ -49,7 +58,7 @@ public class GeneralLedgerModel {
 
         }
 
-        return sb.toString();
+        return "GL-" + sb;
     }
 
 

@@ -22,12 +22,11 @@ public class AmortizationRegistry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String loanNumber;
     private String loanProvider;
     private String loanDetails;
     private BigDecimal loanAmount;
     private BigDecimal annualInterestRate;
-    private BigDecimal loanPeriodInMonths;
+    private int loanPeriodInMonths;
     private BigDecimal extraPaymentPerMonth;
     private Date loanStartDate;
 

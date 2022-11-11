@@ -19,7 +19,10 @@ public class InventoryPurchase {
     private String inventoryPurchaseNumber;
 
     private Date date;
-    private String itemName;
+
+    @ManyToOne
+    @JoinColumn(name = "inventoryNumber", referencedColumnName = "inventoryNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_INV_IP_inventoryNumber"))
+    private Inventory inventory;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_IC_IP_categoryId"))
@@ -28,6 +31,10 @@ public class InventoryPurchase {
     private BigDecimal units;
     private BigDecimal stockingPrice;
     private BigDecimal paid;
+
+    @ManyToOne
+    @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_IP_businessId"))
+    private Businesses business;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_IP_transactionNumber"))

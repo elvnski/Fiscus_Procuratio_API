@@ -38,12 +38,6 @@ public class Cash {
     private AccountsReceivableReceipts accountsReceivableReceipts;
 
     @OneToOne(mappedBy = "cash", fetch = FetchType.EAGER)
-    private CashPayments cashPayments;
-
-    @OneToOne(mappedBy = "cash", fetch = FetchType.EAGER)
-    private CashReceipts cashReceipts;
-
-    @OneToOne(mappedBy = "cash", fetch = FetchType.EAGER)
     private InventoryPurchase inventoryPurchase;
 
     @OneToOne(mappedBy = "cash", fetch = FetchType.EAGER)
