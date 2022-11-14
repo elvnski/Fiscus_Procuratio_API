@@ -15,6 +15,11 @@ public class InventoryModel {
     private String inventoryCategoryName;
     private BigDecimal reorderLevel;
 
+    /* FOR SETTING SELLING PRICE */
+    private BigDecimal sellingPrice;
+
+    /* FOR SETTING discount */
+    private BigDecimal discount;
 
 
 

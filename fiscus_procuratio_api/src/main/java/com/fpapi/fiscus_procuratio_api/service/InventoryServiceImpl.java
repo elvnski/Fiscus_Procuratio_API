@@ -2,6 +2,8 @@ package com.fpapi.fiscus_procuratio_api.service;
 
 import com.fpapi.fiscus_procuratio_api.entity.*;
 import com.fpapi.fiscus_procuratio_api.exceptions.CashOverdrawException;
+import com.fpapi.fiscus_procuratio_api.exceptions.ExcessiveDiscountException;
+import com.fpapi.fiscus_procuratio_api.exceptions.IllegalPricingException;
 import com.fpapi.fiscus_procuratio_api.model.CashModel;
 import com.fpapi.fiscus_procuratio_api.model.GeneralLedgerModel;
 import com.fpapi.fiscus_procuratio_api.model.InventoryModel;
@@ -111,6 +113,65 @@ public class InventoryServiceImpl implements InventoryService{
         inventoryRepository.save(inventory);
 
         return inventory;
+    }
+
+    @Override
+    public Inventory setSellingPrice(String invNo, InventoryModel inventoryModel) {
+
+        Inventory inventory = inventoryRepository.findById(invNo).get();
+
+        try {
+            checkForIllegalPricing(inventoryModel.getSellingPrice(), inventory.getStockingPrice());
+        } catch (IllegalPricingException e) {
+            throw new RuntimeException(e);
+        }
+
+        inventory.setSellingPrice(inventoryModel.getSellingPrice());
+        inventory.setTotalItemStockValue(inventoryModel.getSellingPrice().multiply(inventory.getCurrentQuantity()).setScale(2, RoundingMode.HALF_UP));
+
+        inventoryRepository.save(inventory);
+
+        return inventory;
+    }
+
+    @Override
+    public Inventory setDiscount(String invNo, InventoryModel inventoryModel) {
+
+        Inventory inventory = inventoryRepository.findById(invNo).get();
+
+        try {
+            checkForExcessiveDiscount(inventoryModel.getDiscount());
+        } catch (ExcessiveDiscountException e) {
+            throw new RuntimeException(e);
+        }
+
+        inventory.setAllowedDiscountPercentage(inventoryModel.getDiscount());
+
+        inventoryRepository.save(inventory);
+
+        return inventory;
+    }
+
+
+    public void checkForIllegalPricing(BigDecimal setPrice, BigDecimal stockingPrice) throws IllegalPricingException {
+
+        BigDecimal lowestPrice = stockingPrice.multiply(BigDecimal.valueOf(1.200)).setScale(2, RoundingMode.HALF_UP);
+
+         if (setPrice.compareTo(lowestPrice) < 0){
+             throw new IllegalPricingException("Cannot set selling price to KES " + setPrice + " as it is below the " +
+                     "allowed profit margin of 20% over the KES " + stockingPrice + " stocking price of this Item");
+         }
+
+    }
+
+    public void checkForExcessiveDiscount(BigDecimal setDiscount) throws ExcessiveDiscountException {
+
+        BigDecimal maxDiscount = BigDecimal.valueOf(15.00);
+
+        if (setDiscount.compareTo(maxDiscount) > 0){
+            throw new ExcessiveDiscountException("Cannot set dicount of " + setDiscount + "% as it is above the " +
+                    "allowed maximum discount of 15%.");
+        }
     }
 
 

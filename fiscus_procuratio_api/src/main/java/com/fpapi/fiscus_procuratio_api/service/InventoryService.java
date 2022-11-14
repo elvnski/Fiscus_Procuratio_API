@@ -9,4 +9,8 @@ public interface InventoryService {
     InventoryPurchase recordInventoryPurchase(InventoryPurchaseModel inventoryPurchaseModel);
 
     Inventory addInventoryItem(InventoryModel inventoryModel);
+
+    Inventory setSellingPrice(String invNo, InventoryModel inventoryModel);
+
+    Inventory setDiscount(String invNo, InventoryModel inventoryModel);
 }
