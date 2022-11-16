@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
-import java.util.Date;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -44,6 +42,9 @@ public class InventoryServiceImpl implements InventoryService{
     @Autowired
     private CashService cashService;
 
+    @Autowired
+    private CodesAndDateService codesAndDateService;
+
     @Override
     public InventoryPurchase recordInventoryPurchase(InventoryPurchaseModel inventoryPurchaseModel) {
 
@@ -71,8 +72,8 @@ public class InventoryServiceImpl implements InventoryService{
         Inventory inventory = inventoryRepository.findByItemName(inventoryPurchaseModel.getItemName());
 
         InventoryPurchase inventoryPurchase = InventoryPurchase.builder()
-                .inventoryPurchaseNumber("IP-" + generateInventoryNumber())
-                .date(getDate())
+                .inventoryPurchaseNumber(codesAndDateService.generateTransactionCode("IP-"))
+                .date(codesAndDateService.getDate())
                 .inventory(inventory)
                 .inventoryCategory(inventoryCategoryRepository.findByCategory(inventoryPurchaseModel.getInventoryCategoryName()))
                 .units(inventoryPurchaseModel.getUnits())
@@ -98,8 +99,8 @@ public class InventoryServiceImpl implements InventoryService{
     public Inventory addInventoryItem(InventoryModel inventoryModel) {
 
         Inventory inventory = Inventory.builder()
-                .inventoryNumber("INV-" + generateInventoryNumber())
-                .date(getDate())
+                .inventoryNumber(codesAndDateService.generateTransactionCode("INVY-"))
+                .date(codesAndDateService.getDate())
                 .itemName(inventoryModel.getItemName())
                 .inventoryCategory(inventoryCategoryRepository.findByCategory(inventoryModel.getInventoryCategoryName()))
                 .currentQuantity(BigDecimal.valueOf(0.0))
@@ -164,36 +165,18 @@ public class InventoryServiceImpl implements InventoryService{
 
     }
 
+    @Override
     public void checkForExcessiveDiscount(BigDecimal setDiscount) throws ExcessiveDiscountException {
 
         BigDecimal maxDiscount = BigDecimal.valueOf(15.00);
 
         if (setDiscount.compareTo(maxDiscount) > 0){
-            throw new ExcessiveDiscountException("Cannot set dicount of " + setDiscount + "% as it is above the " +
+            throw new ExcessiveDiscountException("Cannot set discount of " + setDiscount + "% as it is above the " +
                     "allowed maximum discount of 15%.");
         }
     }
 
 
-    public static String generateInventoryNumber() {
 
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
-
-        StringBuilder sb = new StringBuilder(18);
-
-        for (int i = 0; i < 18; i++) {
-            int index = (int)(AlphaNumericString.length() * Math.random());
-            sb.append(AlphaNumericString.charAt(index));
-        }
-
-        return sb.toString();
-    }
-
-    private Date getDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(new Date().getTime());
-
-        return new Date(calendar.getTime().getTime());
-    }
 
 }

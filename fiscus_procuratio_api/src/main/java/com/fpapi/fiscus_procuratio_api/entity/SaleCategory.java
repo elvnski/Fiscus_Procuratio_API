@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class PurchaseCategory {
+public class SaleCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,15 +20,12 @@ public class PurchaseCategory {
 
     private String category;
 
-    @OneToMany(mappedBy = "purchaseCategory")
+    @OneToMany(mappedBy = "saleCategory")
     @ToString.Exclude
-    private List<Purchases> purchasesList;
+    private List<Sales> salesList;
 
-    @OneToMany(mappedBy = "purchaseCategory")
+    @OneToMany(mappedBy = "saleCategory")
     @ToString.Exclude
-    private List<CashInvoicesReceived> cashInvoicesReceivedList;
-
-
-
+    private List<CashInvoicesIssued> cashInvoicesIssuedList;
 
 }

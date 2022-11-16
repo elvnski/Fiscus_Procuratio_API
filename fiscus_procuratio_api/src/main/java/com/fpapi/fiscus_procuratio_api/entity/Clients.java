@@ -41,7 +41,12 @@ public class Clients {
     private List<AccountsReceivable> accountsReceivableList;
 
 
-    @OneToOne(mappedBy = "client", fetch = FetchType.EAGER)
-    private InvoicesIssued invoicesIssued;
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
+    private List <InvoicesIssued> invoicesIssuedList;
+
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
+    private List<CashInvoicesIssued> cashInvoicesIssuedList;
 
 }

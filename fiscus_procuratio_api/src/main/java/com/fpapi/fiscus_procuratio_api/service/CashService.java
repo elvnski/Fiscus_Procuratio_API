@@ -13,5 +13,6 @@ public interface CashService {
 
     void checkForCashOverdraw(BigDecimal spendingAmount) throws CashOverdrawException;
 
+    BigDecimal getLatestCashBalance();
 
 }

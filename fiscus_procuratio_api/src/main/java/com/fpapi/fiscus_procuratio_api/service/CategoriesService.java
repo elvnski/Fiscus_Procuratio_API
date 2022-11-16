@@ -24,4 +24,8 @@ public interface CategoriesService {
     LoanCategory alterLoanCategoryById(Long id, LoanCategoryModel loanCategoryModel);
 
     PurchaseCategory alterPurchaseCategoryById(Long id, PurchaseCategoryModel purchaseCategoryModel);
+
+    SaleCategory addSaleCategory(SaleCategoryModel saleCategoryModel);
+
+    SaleCategory alterSaleCategoryById(Long id, SaleCategoryModel saleCategoryModel);
 }

@@ -24,7 +24,7 @@ public class InvoicesIssued {
     private BigDecimal discount;
     private String details;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clientId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_II_C_clientId"))
     private Clients client;
 

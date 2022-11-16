@@ -54,6 +54,9 @@ public class AccountsServiceImpl implements AccountsService{
     @Autowired
     private GeneralLedgerService generalLedgerService;
 
+    @Autowired
+    private CodesAndDateService codesAndDateService;
+
 
     @Override
     public AccountsPayable recordAccountsPayable(AccountsPayableModel accountsPayableModel) {
@@ -66,7 +69,7 @@ public class AccountsServiceImpl implements AccountsService{
         AccountsPayable accountsPayable = new AccountsPayable();
 
         accountsPayable.setGeneralLedger(generalLedger);
-        accountsPayable.setDate(getDate());
+        accountsPayable.setDate(codesAndDateService.getDate());
         accountsPayable.setBusiness(businessesRepository.findByName(accountsPayableModel.getBusinessName()));
 
         if (Objects.nonNull(accountsPayableModel.getInvoiceNumber())) {
@@ -96,7 +99,7 @@ public class AccountsServiceImpl implements AccountsService{
 
         AccountsReceivable accountsReceivable = AccountsReceivable.builder()
                 .generalLedger(generalLedger)
-                .date(getDate())
+                .date(codesAndDateService.getDate())
                 .client(clientsRepository.findByName(accountsReceivableModel.getClientName()))
                 .invoicesIssued(invoicesIssued)
                 .description(invoicesIssued.getDetails())
@@ -140,8 +143,8 @@ public class AccountsServiceImpl implements AccountsService{
                 .generalLedger(generalLedger)
                 .cash(cash)
                 .accountsPayable(accountsPayable)
-                .paymentNumber("APP-"+generatePaymentNumber())
-                .date(getDate())
+                .paymentNumber(codesAndDateService.generateTransactionCode("APP-"))
+                .date(codesAndDateService.getDate())
                 .payment(accountsPayablePaymentsModel.getPayment())
                 .build();
         accountsPayablePaymentsRepository.save(accountsPayablePayments);
@@ -174,8 +177,8 @@ public class AccountsServiceImpl implements AccountsService{
                 .generalLedger(generalLedger)
                 .cash(cash)
                 .accountsReceivable(accountsReceivable)
-                .receiptNumber("ARR-"+generatePaymentNumber())
-                .date(getDate())
+                .receiptNumber(codesAndDateService.generateTransactionCode("ARR-"))
+                .date(codesAndDateService.getDate())
                 .paymentReceived(accountsReceivableReceiptsModel.getPayment())
                 .build();
         accountsReceivableReceiptsRepository.save(accountsReceivableReceipts);
@@ -189,39 +192,6 @@ public class AccountsServiceImpl implements AccountsService{
 
 
 
-    private Date getDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(new Date().getTime());
 
-        return new Date(calendar.getTime().getTime());
-    }
-
-    private Date calculateDueDate(int daysToPay) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(new Date().getTime());
-        calendar.add(Calendar.DATE, daysToPay);
-
-        return new Date(calendar.getTime().getTime());
-    }
-
-    static String generatePaymentNumber() {
-
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(16);
-
-        for (int i = 0; i < 16; i++) {
-            // generate a random number between 0 to AlphaNumericString variable length
-            int index = (int)(AlphaNumericString.length() * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString.charAt(index));
-
-        }
-
-        return sb.toString();
-    }
 
 }

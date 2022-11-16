@@ -31,7 +31,7 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
     private BusinessesRepository businessesRepository;
 
     @Autowired
-    private GeneralLedgerRepository generalLedgerRepository;
+    private CodesAndDateService codesAndDateService;
 
 
     @Override
@@ -39,9 +39,9 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
 
         InvoicesIssued invoicesIssued = new InvoicesIssued();
 
-        invoicesIssued.setInvoiceNumber(generateInvoiceNumber());
+        invoicesIssued.setInvoiceNumber(codesAndDateService.generateTransactionCode("II-"));
         invoicesIssued.setClient(clientsRepository.findByName(invoicesIssuedModel.getClientName()));
-        invoicesIssued.setIssueDate(getDate());
+        invoicesIssued.setIssueDate(codesAndDateService.getDate());
         invoicesIssued.setPaymentDate(calculatePaymentDate(invoicesIssuedModel.getDaysToPay()));
         invoicesIssued.setInvoiceAmount(invoicesIssuedModel.getInvoiceAmount());
         invoicesIssued.setDiscount(invoicesIssuedModel.getDiscount());
@@ -59,7 +59,7 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
 
         invoicesOwed.setInvoiceNumber(invoicesOwedModel.getInvoiceNumber());
         invoicesOwed.setBusiness(businessesRepository.findByName(invoicesOwedModel.getBusinessName()));
-        invoicesOwed.setIssueDate(getDate());
+        invoicesOwed.setIssueDate(codesAndDateService.getDate());
         invoicesOwed.setPaymentDate(calculatePaymentDate(invoicesOwedModel.getDaysToPay()));
         invoicesOwed.setInvoiceAmount(invoicesOwedModel.getInvoiceAmount());
         invoicesOwed.setDiscount(invoicesOwedModel.getDiscount());
@@ -71,38 +71,11 @@ public class TransactionRecordsServiceImpl implements TransactionRecordsService{
     }
 
 
-    static String generateInvoiceNumber() {
-
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(16);
-
-        for (int i = 0; i < 16; i++) {
-            // generate a random number between 0 to AlphaNumericString variable length
-            int index = (int)(AlphaNumericString.length() * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString.charAt(index));
-
-        }
-
-        return "II-" + sb;
-    }
-
 
     private Date calculatePaymentDate(int daysToPay) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(new Date().getTime());
         calendar.add(Calendar.DATE, daysToPay);
-
-        return new Date(calendar.getTime().getTime());
-    }
-
-    private Date getDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(new Date().getTime());
 
         return new Date(calendar.getTime().getTime());
     }

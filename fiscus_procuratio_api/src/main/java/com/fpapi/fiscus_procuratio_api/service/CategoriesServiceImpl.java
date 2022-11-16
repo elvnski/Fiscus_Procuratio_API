@@ -26,6 +26,9 @@ public class CategoriesServiceImpl implements CategoriesService{
     @Autowired
     private PurchaseCategoryRepository purchaseCategoryRepository;
 
+    @Autowired
+    private SaleCategoryRepository saleCategoryRepository;
+
     @Override
     public BusinessCategory addBusinessCategory(BusinessCategoryModel businessCategoryModel) {
 
@@ -173,5 +176,36 @@ public class CategoriesServiceImpl implements CategoriesService{
         }
 
         return purchaseCategory;
+    }
+
+    @Override
+    public SaleCategory addSaleCategory(SaleCategoryModel saleCategoryModel) {
+
+        SaleCategory saleCategory = SaleCategory.builder()
+                .category(saleCategoryModel.getCategory())
+                .build();
+
+        saleCategoryRepository.save(saleCategory);
+
+        return saleCategory;
+    }
+
+    @Override
+    public SaleCategory alterSaleCategoryById(Long id, SaleCategoryModel saleCategoryModel) {
+
+        SaleCategory saleCategory = null;
+
+        if (saleCategoryRepository.findById(id).isPresent()){
+            saleCategory = saleCategoryRepository.findById(id).get();
+
+            if (Objects.nonNull(saleCategoryModel.getNewCategoryName())){
+                saleCategory.setCategory(saleCategoryModel.getNewCategoryName());
+            }
+
+            saleCategoryRepository.save(saleCategory);
+
+        }
+
+        return saleCategory;
     }
 }

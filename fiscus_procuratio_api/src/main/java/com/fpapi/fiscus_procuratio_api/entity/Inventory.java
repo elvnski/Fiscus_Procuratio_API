@@ -42,5 +42,9 @@ public class Inventory {
     @ToString.Exclude
     private List<InventoryPurchase> inventoryPurchaseList;
 
+    @OneToMany(mappedBy = "inventory")
+    @ToString.Exclude
+    private List<CashInvoicesIssued> cashInvoicesIssuedList;
+
 
 }

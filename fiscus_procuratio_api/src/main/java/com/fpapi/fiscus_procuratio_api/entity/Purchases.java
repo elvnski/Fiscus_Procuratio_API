@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -15,6 +16,12 @@ import java.math.BigDecimal;
 public class Purchases {
     @Id
     private String purchaseNumber;
+
+    private Date date;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cashInvoiceNumber", referencedColumnName = "invoiceNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_CIR_PUR_invoiceNumber"))
+    private CashInvoicesReceived cashInvoicesReceived;
 
     private String itemName;
 
@@ -28,10 +35,9 @@ public class Purchases {
 
     private BigDecimal unitsBought;
     private BigDecimal unitPrice;
-    private BigDecimal unitDiscount;
+    private BigDecimal discountPercentage;
+    private BigDecimal discount;
     private BigDecimal totalPrice;
-    private BigDecimal totalDiscount;
-
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_P_transactionNumber"))
@@ -40,6 +46,7 @@ public class Purchases {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cashTransactionNumber", referencedColumnName = "cashTransactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_C_P_cashTransactionNumber"))
     private Cash cash;
+
 
 
 

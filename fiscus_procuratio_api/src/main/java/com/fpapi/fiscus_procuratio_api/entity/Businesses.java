@@ -50,4 +50,7 @@ public class Businesses {
     @ToString.Exclude
     private List<InventoryPurchase> inventoryPurchaseList;
 
+    @OneToMany(mappedBy = "business")
+    private List<CashInvoicesReceived> cashInvoicesReceivedList;
+
 }

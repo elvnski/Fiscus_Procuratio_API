@@ -111,7 +111,21 @@ public class CategoriesController {
         return "Purchase category with ID '" + id + "' name changed to '" + purchaseCategory.getCategory() + "'";
     }
 
+    @PostMapping("/categories/sale/add")
+    public String addSaleCategory(@RequestBody SaleCategoryModel saleCategoryModel){
 
+        SaleCategory saleCategory = categoriesService.addSaleCategory(saleCategoryModel);
+
+        return "Sale Category: '" + saleCategory.getCategory() + "' Saved Successfully!";
+    }
+
+    @PutMapping("categories/sale/alter/{id}")
+    public String alterSaleCategory(@PathVariable("id") Long id, @RequestBody SaleCategoryModel saleCategoryModel) {
+
+        SaleCategory saleCategory = categoriesService.alterSaleCategoryById(id, saleCategoryModel);
+
+        return "Sale category with ID '" + id + "' name changed to '" + saleCategory.getCategory() + "'";
+    }
 
 
 }

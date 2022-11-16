@@ -20,11 +20,13 @@ public class CashServiceImpl implements CashService{
     @Autowired
     private CashRepository cashRepository;
 
-    @Autowired
-    private GeneralLedgerRepository generalLedgerRepository;
 
     @Autowired
     private GeneralLedgerService generalLedgerService;
+
+    @Autowired
+    private CodesAndDateService codesAndDateService;
+
 
     @Override
     public Cash depositCash(CashModel cashModel) {
@@ -41,8 +43,8 @@ public class CashServiceImpl implements CashService{
         new CashModel();
         Cash cash = Cash.builder()
                 .generalLedger(generalLedger)
-                .cashTransactionNumber(CashModel.generateCashTransactionNumber())
-                .date(getDate())
+                .cashTransactionNumber(codesAndDateService.generateTransactionCode("CSH-"))
+                .date(codesAndDateService.getDate())
                 .sourceAccount(cashModel.getSourceAccount())
                 .destinationAccount(cashModel.getDestinationAccount())
                 .details(cashModel.getDetails())
@@ -64,8 +66,8 @@ public class CashServiceImpl implements CashService{
 
         Cash cash = Cash.builder()
                 .generalLedger(cashModel.getGeneralLedger())
-                .cashTransactionNumber(generateCashTransactionNumber())
-                .date(getDate())
+                .cashTransactionNumber(codesAndDateService.generateTransactionCode("CSH-"))
+                .date(codesAndDateService.getDate())
                 .sourceAccount(cashModel.getSourceAccount())
                 .destinationAccount(cashModel.getDestinationAccount())
                 .details(cashModel.getDetails())
@@ -94,33 +96,16 @@ public class CashServiceImpl implements CashService{
 
     }
 
-    public static String generateCashTransactionNumber() {
+    @Override
+    public BigDecimal getLatestCashBalance() {
 
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
+        BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
 
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(18);
-
-        for (int i = 0; i < 18; i++) {
-            // generate a random number between 0 to AlphaNumericString variable length
-            int index = (int)(AlphaNumericString.length() * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString.charAt(index));
-
+        if (!cashRepository.findAll().isEmpty()) {
+            latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
         }
 
-        return "CSH-" + sb;
-    }
-
-    private Date getDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(new Date().getTime());
-
-        return new Date(calendar.getTime().getTime());
+        return latestCashBalance;
     }
 
 
