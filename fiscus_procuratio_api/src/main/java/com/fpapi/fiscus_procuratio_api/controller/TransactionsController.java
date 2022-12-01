@@ -26,9 +26,14 @@ public class TransactionsController {
         CashInvoicesIssued cashInvoicesIssued = transactionsService.recordInvoiceIssued(cashInvoicesIssuedModel);
 
         return "New Cash Invoice Issued No. " + cashInvoicesIssued.getInvoiceNumber() + " of Total KES " + cashInvoicesIssued.getInvoiceAmount() + " to "
-                + cashInvoicesIssuedModel.getClientName() + " Has Been Recorded on " + cashInvoicesIssued.getIssueDate() + " Successfully!";
+                + cashInvoicesIssuedModel.getClientName() + " Has Been Recorded on " + cashInvoicesIssued.getDateIssued() + " Successfully!";
     }
 
+
+    //TODO Create Exception to prevent selling an item whose selling price is not set(i.e Selling price or Stocking price is at 0.00)
+    //TODO Create Exception to prevent selling item quantity which makes stock quantity below zero
+
+    //TODO Create exception to prevent executing a cash invoice sale for a PAID Cash Invoice
 
     @PostMapping("/transactions/sales/execute")
     private String recordSale(@RequestBody SalesModel salesModel) {
@@ -46,6 +51,12 @@ public class TransactionsController {
 
         return cashInvoicesReceived.getDetails() + " Has Been Recorded Successfully!";
     }
+
+    //TODO Create exception to prevent executing a cash invoice PURCHASE for a PAID Cash Invoice
+
+    //TODO Create a BUSINESS ASSETS CATEGORY table
+    //TODO Create a BUSINESS ASSETS table to record and keep value of ALL ACQUISITIONS/PURCHASES of the Business
+    //TODO Ensure BUSINESS ASSETS table is debited after every purchase and RECORDED IN GENERAL LEDGER
 
     @PostMapping("/transactions/purchases/execute")
     private String recordPurchase(@RequestBody PurchasesModel purchasesModel){

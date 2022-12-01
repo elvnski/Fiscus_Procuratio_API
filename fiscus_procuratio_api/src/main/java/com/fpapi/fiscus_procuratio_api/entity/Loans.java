@@ -26,8 +26,9 @@ public class Loans {
     /* Bank ID */
     @ManyToOne
     @JoinColumn(name = "bankId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_BAN_L_bankId"))
-    private Banks banks;
+    private Banks bank;
 
+    private Date date;
     private String details;
     private BigDecimal amount;
     private BigDecimal annualRate;
@@ -39,14 +40,12 @@ public class Loans {
     private BigDecimal totalEarlyPayments;
     private BigDecimal totalInterest;
     private BigDecimal balance;
-    private Date date;
+
 
     @OneToMany(mappedBy = "loans")
     @ToString.Exclude
     private List<LoanPayments> loanPaymentsList;
 
-    @OneToOne(mappedBy = "loans", fetch = FetchType.EAGER)
-    private AccountsPayable accountsPayable;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_L_transactionNumber"))

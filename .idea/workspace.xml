@@ -5,42 +5,85 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b0beedeb-67fc-440a-a8bd-e65ff54b1715" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/TransactionsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesIssued.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesReceived.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/SaleCategory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashInvoicesIssuedModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashInvoicesReceivedModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/PurchasesModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/SaleCategoryModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/SalesModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/CashInvoicesIssuedRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/CashInvoicesReceivedRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/PurchasesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/SaleCategoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/SalesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CodesAndDateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CodesAndDateServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/LoanController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/BusinessAccounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CapitalContributions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashAccounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/ClientAccounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/DefaultCashAccounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/OwnerAccounts.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Owners.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/InactiveBusinessAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/InactiveCashAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/InactiveClientAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/InactiveOwnerAccountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/IssuedCashInvoicePaidException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/ItemSoldOutException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/OverpaymentException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/ReceivedCashInvoicePaidException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/SellingPriceNotSetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/WrongAccountSelectionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/BusinessAccountsModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashAccountsModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashFromClientModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashFromOwnerModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashToBusinessModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/ClientsAccountsModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/DefaultCashAccountsModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/LoansModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/OwnerAccountsModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/OwnersModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/TradingFundsAllocationModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/BusinessAccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/CapitalContributionsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/CashAccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/ClientAccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/DefaultCashAccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/LoansServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/OwnerAccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/repository/OwnersRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/LoansService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a835bb68-97cb-456a-8787-4603bcc68938.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a835bb68-97cb-456a-8787-4603bcc68938.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/CategoriesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/CategoriesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/CashController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/CashController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/EntitiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/EntitiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/TransactionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/controller/TransactionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsPayable.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsPayable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsPayablePayments.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsPayablePayments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsReceivable.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsReceivable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsReceivableReceipts.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/AccountsReceivableReceipts.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Banks.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Banks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/BusinessCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/BusinessCategory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Businesses.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Businesses.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Cash.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Cash.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesIssued.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesIssued.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesReceived.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/CashInvoicesReceived.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/ClientCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/ClientCategory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Clients.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/InvoicesIssued.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/InvoicesIssued.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/InventoryCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/InventoryCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/LoanCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/LoanCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Loans.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Loans.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/PurchaseCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/PurchaseCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Purchases.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Purchases.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Sales.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/Sales.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/SaleCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/entity/SaleCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/handlers/ResponseExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/exceptions/handlers/ResponseExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsPayableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsPayableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsReceivableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsReceivableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsReceivableReceiptsModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/AccountsReceivableReceiptsModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/CashModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/InventoryPurchaseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/InventoryPurchaseModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/PurchasesModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/PurchasesModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/SalesModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/model/SalesModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/AccountsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/AccountsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/AccountsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/AccountsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CashService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CashService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CashServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CashServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CategoriesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CategoriesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CategoriesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/CategoriesServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/GeneralLedgerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/GeneralLedgerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/EntitiesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/EntitiesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/EntitiesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/EntitiesServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/InventoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/InventoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionRecordsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionRecordsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fiscus_procuratio_api/src/main/java/com/fpapi/fiscus_procuratio_api/service/TransactionsServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +93,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="com.haulmont.jpb.JpaEntity" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -93,30 +137,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.ignored.files&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;31c840a0bd330d8db327b6b50f240846&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fpapi.fiscus_procuratio_api.exceptions" />
       <recent name="com.fpapi.fiscus_procuratio_api.model" />
+      <recent name="com.fpapi.fiscus_procuratio_api.repository" />
+      <recent name="com.fpapi.fiscus_procuratio_api.entity" />
     </key>
   </component>
   <component name="RunManager">
@@ -136,7 +185,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667464563574</updated>
-      <workItem from="1667464579489" duration="129733000" />
+      <workItem from="1667464579489" duration="222170000" />
+      <workItem from="1669197463118" duration="1113000" />
+      <workItem from="1669199024298" duration="2842000" />
+      <workItem from="1669295745556" duration="5940000" />
     </task>
     <servers />
   </component>

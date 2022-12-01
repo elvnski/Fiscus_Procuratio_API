@@ -3,14 +3,17 @@ package com.fpapi.fiscus_procuratio_api.service;
 import com.fpapi.fiscus_procuratio_api.entity.Banks;
 import com.fpapi.fiscus_procuratio_api.entity.Businesses;
 import com.fpapi.fiscus_procuratio_api.entity.Clients;
+import com.fpapi.fiscus_procuratio_api.entity.Owners;
 import com.fpapi.fiscus_procuratio_api.model.BanksModel;
 import com.fpapi.fiscus_procuratio_api.model.BusinessesModel;
 import com.fpapi.fiscus_procuratio_api.model.ClientsModel;
+import com.fpapi.fiscus_procuratio_api.model.OwnersModel;
 import com.fpapi.fiscus_procuratio_api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 @Service
@@ -30,6 +33,9 @@ public class EntitiesServiceImpl implements EntitiesService{
 
     @Autowired
     private ClientCategoryRepository clientCategoryRepository;
+
+    @Autowired
+    private OwnersRepository ownersRepository;
 
     @Override
     public Banks addBankEntity(BanksModel banksModel) {
@@ -169,6 +175,22 @@ public class EntitiesServiceImpl implements EntitiesService{
 
         return client;
     }
+
+    @Override
+    public Owners addOwnerEntity(OwnersModel ownersModel) {
+
+        Owners owner = Owners.builder()
+                .name(ownersModel.getOwnerName())
+                .shareHolding(BigDecimal.ZERO)
+                .build();
+
+        ownersRepository.save(owner);
+
+        return owner;
+    }
+
+    //TODO Set up shareholding according to percentage of Capital contributed
+
 
 
 }

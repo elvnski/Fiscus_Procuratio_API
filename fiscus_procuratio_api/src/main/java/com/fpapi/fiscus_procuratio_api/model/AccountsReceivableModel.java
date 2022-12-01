@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AccountsReceivableModel {
 
-    private String clientName;
-
     private String invoiceNumber;
+    private String clientAccountName;
+
 
 }

@@ -12,6 +12,13 @@ import java.math.BigDecimal;
 public class InventoryPurchaseModel {
 
     private String businessName;
+
+    //TODO Change ALL business account model parameters to use ACCOUNT NAME
+
+
+    private String businessAccountName;
+
+
     private String itemName;
     private String inventoryCategoryName;
     private BigDecimal units;

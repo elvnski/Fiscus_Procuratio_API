@@ -11,7 +11,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class SalesModel {
 
+    //TODO Change to use Client Account Name to identify the Client Account in request
+
     private String cashInvoiceNumber;
+//    private String clientAccountNumber;
+    private String clientAccountName;
 
 
 

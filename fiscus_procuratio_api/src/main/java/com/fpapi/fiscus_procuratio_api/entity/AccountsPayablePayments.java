@@ -27,6 +27,11 @@ public class AccountsPayablePayments {
 
     private BigDecimal payment;
 
+    @ManyToOne
+    @JoinColumn(name = "businessAccountNumber", referencedColumnName = "accountNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_BACC_APP_businessAccountNumber" ))
+    private BusinessAccounts businessAccount;
+
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_GL_APP_transactionNumber"))
     private GeneralLedger generalLedger;

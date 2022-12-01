@@ -4,10 +4,7 @@ import com.fpapi.fiscus_procuratio_api.entity.*;
 import com.fpapi.fiscus_procuratio_api.exceptions.CashOverdrawException;
 import com.fpapi.fiscus_procuratio_api.exceptions.ExcessiveDiscountException;
 import com.fpapi.fiscus_procuratio_api.exceptions.IllegalPricingException;
-import com.fpapi.fiscus_procuratio_api.model.CashModel;
-import com.fpapi.fiscus_procuratio_api.model.GeneralLedgerModel;
-import com.fpapi.fiscus_procuratio_api.model.InventoryModel;
-import com.fpapi.fiscus_procuratio_api.model.InventoryPurchaseModel;
+import com.fpapi.fiscus_procuratio_api.model.*;
 import com.fpapi.fiscus_procuratio_api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +42,20 @@ public class InventoryServiceImpl implements InventoryService{
     @Autowired
     private CodesAndDateService codesAndDateService;
 
+    @Autowired
+    private BusinessAccountsRepository businessAccountsRepository;
+
+    @Autowired
+    private DefaultCashAccountsRepository defaultCashAccountsRepository;
+
+    //TODO : Change the Credited Account For ALL PURCHASE TRANSACTIONS to credit the TRADING ACCOUNT and NOT THE CASH TABLE
     @Override
     public InventoryPurchase recordInventoryPurchase(InventoryPurchaseModel inventoryPurchaseModel) {
 
         BigDecimal paid = (inventoryPurchaseModel.getStockingPrice().multiply(inventoryPurchaseModel.getUnits())).setScale(2, RoundingMode.HALF_UP);
 
         try {
-            cashService.checkForCashOverdraw(paid);
+            cashService.checkForTradingCashOverdraw(paid);
         } catch (CashOverdrawException e) {
             throw new RuntimeException(e);
         }
@@ -60,14 +64,11 @@ public class InventoryServiceImpl implements InventoryService{
 
         GeneralLedger generalLedger = generalLedgerService.recordTransaction(new GeneralLedgerModel("Inventory Purchase", "Expense", paid, BigDecimal.valueOf(0.0)));
 
-        BigDecimal latestCashBalance = BigDecimal.valueOf(0.0);
-        if (!cashRepository.findAll().isEmpty()) {
-            latestCashBalance = cashRepository.findByDate(cashRepository.getMaxDate()).getBalance();
-        }
 
-        Cash cash = cashService.spendCash(new CashModel(generalLedger, "Cash", "Inventory Purchase",
+        Cash cash = cashService.sendCashToBusiness(new CashToBusinessModel("Cash", "Inventory Purchase",
                 "Purchase of " + inventoryPurchaseModel.getUnits() + " units of " + inventoryPurchaseModel.getItemName() + " from " + business.getName() + ".",
-                BigDecimal.valueOf(0.0), paid, latestCashBalance));
+                businessAccountsRepository.findByAccountName(inventoryPurchaseModel.getBusinessAccountName()),
+                paid));
 
         Inventory inventory = inventoryRepository.findByItemName(inventoryPurchaseModel.getItemName());
 

@@ -26,7 +26,9 @@ public class AccountsReceivableReceipts {
 
     private BigDecimal paymentReceived;
 
-
+    @ManyToOne
+    @JoinColumn(name = "clientAccountNumber", referencedColumnName = "accountNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_CACC_ARR_clientAccountNumber"))
+    private ClientAccounts clientAccount;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_GL_ARR_transactionNumber"), name = "transactionNumber", referencedColumnName = "transactionNumber", nullable = false)

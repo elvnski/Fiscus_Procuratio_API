@@ -19,7 +19,7 @@ public class Clients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToOne
@@ -48,5 +48,13 @@ public class Clients {
     @OneToMany(mappedBy = "client")
     @ToString.Exclude
     private List<CashInvoicesIssued> cashInvoicesIssuedList;
+
+
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
+    private List<ClientAccounts> clientAccountsList;
+
+
+
 
 }

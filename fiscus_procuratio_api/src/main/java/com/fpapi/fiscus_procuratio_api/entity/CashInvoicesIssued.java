@@ -18,7 +18,10 @@ public class CashInvoicesIssued {
 
     @Id
     private String invoiceNumber;
-    private Date issueDate;
+
+    private Date dateIssued;
+
+    private Date datePaid;
 
     @ManyToOne
     @JoinColumn(name = "clientId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CII_C_clientId"))

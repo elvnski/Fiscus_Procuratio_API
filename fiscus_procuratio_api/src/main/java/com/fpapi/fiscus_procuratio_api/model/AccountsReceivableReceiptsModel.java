@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 public class AccountsReceivableReceiptsModel {
 
     private Long accountsReceivableId;
-    private String clientName;
     private String details;
     private BigDecimal payment;
+
 
 
 

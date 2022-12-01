@@ -20,7 +20,7 @@ public class Businesses {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(nullable = false, unique = true)
     private String name;
 
     /* BIZ CATEGORY */
@@ -51,6 +51,14 @@ public class Businesses {
     private List<InventoryPurchase> inventoryPurchaseList;
 
     @OneToMany(mappedBy = "business")
+    @ToString.Exclude
     private List<CashInvoicesReceived> cashInvoicesReceivedList;
+
+    @OneToMany(mappedBy = "business")
+    @ToString.Exclude
+    private List<BusinessAccounts> businessAccountsList;
+
+
+
 
 }

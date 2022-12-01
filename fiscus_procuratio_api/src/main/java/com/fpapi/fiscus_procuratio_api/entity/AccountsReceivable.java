@@ -31,6 +31,9 @@ public class AccountsReceivable {
     @JoinColumn(name = "clientId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_CL_AR_client_id"))
     private Clients client;
 
+    @ManyToOne
+    @JoinColumn(name = "clientAccountNumber", referencedColumnName = "accountNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_CACC_AR_clientAccountNumber"))
+    private ClientAccounts clientAccount;
 
     private String description;
     private BigDecimal invoiceAmount;

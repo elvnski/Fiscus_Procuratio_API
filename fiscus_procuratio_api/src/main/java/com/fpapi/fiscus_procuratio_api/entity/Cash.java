@@ -23,9 +23,40 @@ public class Cash {
     private GeneralLedger generalLedger;
 
     private Date date;
-    private String sourceAccount;
-    private String destinationAccount;
+
+    private String nature; /* "DEPOSIT" or "WITHDRAWAL" */
+
+    private String source;
+    private String destination;
+
     private String details;
+
+    @ManyToOne
+    @JoinColumn(name = "debitedLocalAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_CA_C_debitedLocalAccount"))
+    private CashAccounts debitedCashAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "creditedLocalAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_CA_C_creditedLocalAccount"))
+    private CashAccounts creditedCashAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "debitedBusinessAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_BACC_C_debitedBusinessAccount"))
+    private BusinessAccounts debitedBusinessAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "creditedClientAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_CACC_C_creditedClientAccount"))
+    private ClientAccounts creditedClientAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "debitedOwnerAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_OWACC_C_debitedOwnerAccount"))
+    private OwnerAccounts debitedOwnerAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "creditedOwnerAccount", referencedColumnName = "accountNumber", foreignKey = @ForeignKey(name = "FK_OWACC_C_creditedOwnerAccount"))
+    private OwnerAccounts creditedOwnerAccount;
+
+
+
     private BigDecimal credit;
     private BigDecimal debit;
     private BigDecimal balance;

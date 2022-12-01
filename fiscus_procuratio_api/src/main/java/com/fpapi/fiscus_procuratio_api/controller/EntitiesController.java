@@ -3,9 +3,11 @@ package com.fpapi.fiscus_procuratio_api.controller;
 import com.fpapi.fiscus_procuratio_api.entity.Banks;
 import com.fpapi.fiscus_procuratio_api.entity.Businesses;
 import com.fpapi.fiscus_procuratio_api.entity.Clients;
+import com.fpapi.fiscus_procuratio_api.entity.Owners;
 import com.fpapi.fiscus_procuratio_api.model.BanksModel;
 import com.fpapi.fiscus_procuratio_api.model.BusinessesModel;
 import com.fpapi.fiscus_procuratio_api.model.ClientsModel;
+import com.fpapi.fiscus_procuratio_api.model.OwnersModel;
 import com.fpapi.fiscus_procuratio_api.service.EntitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,19 @@ public class EntitiesController {
 
     @Autowired
     private EntitiesService entitiesService;
+
+
+    @PostMapping("/entities/owners/add")
+    public String addOwnerEntity(@RequestBody OwnersModel ownersModel){
+
+        Owners owner = entitiesService.addOwnerEntity(ownersModel);
+
+        return "New Owner: '" + owner.getName() + "', Saved Successfully!";
+    }
+
+
+
+
 
     /* SAVES A NEW BANK */
     @PostMapping("/entities/banks/add")

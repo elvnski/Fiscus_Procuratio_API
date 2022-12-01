@@ -15,10 +15,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class AccountsPayableModel {
 
-    private String businessName;
 
     private String invoiceNumber;
+    private String businessAccountName;
 
+
+    //TODO use LoansPayments Table track Loan Payments
     private String loanNumber;
 
 }

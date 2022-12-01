@@ -17,6 +17,8 @@ public class PurchasesModel {
     private String purchaseCategory;
     private String businessName;
 
+    private String businessAccountName;
+
     private BigDecimal unitsBought;
     private BigDecimal unitPrice;
     private BigDecimal discount;

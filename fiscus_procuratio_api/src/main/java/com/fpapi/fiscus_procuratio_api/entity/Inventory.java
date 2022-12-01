@@ -19,6 +19,8 @@ public class Inventory {
     private String inventoryNumber;
 
     private Date date;
+
+    @Column(nullable = false, unique = true)
     private String itemName;
 
     /* Item Category ID */

@@ -27,13 +27,14 @@ public class AccountsPayable {
     @JoinColumn(name = "invoiceNumber", referencedColumnName = "invoiceNumber", foreignKey = @ForeignKey(name = "FK_INVO_AP_invoiceNumber"))
     private InvoicesOwed invoicesOwed;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "loanNumber", referencedColumnName = "loanNumber", foreignKey = @ForeignKey(name = "FK_L_AP_loanNumber"))
-    private Loans loans;
 
     @ManyToOne
     @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_B_AP_businessId"))
     private Businesses business;
+
+    @ManyToOne
+    @JoinColumn(name = "businessAccountNumber", referencedColumnName = "accountNumber", nullable = false, foreignKey = @ForeignKey(name = "FK_BACC_AP_businessAccountNumber"))
+    private BusinessAccounts businessAccount;
 
     private String description;
     private BigDecimal invoiceAmount;

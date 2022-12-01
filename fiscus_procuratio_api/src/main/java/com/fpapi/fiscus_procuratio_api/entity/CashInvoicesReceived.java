@@ -17,7 +17,10 @@ public class CashInvoicesReceived {
 
     @Id
     private String invoiceNumber;
-    private Date date;
+
+    private Date dateReceived;
+
+    private Date datePaid;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "businessId", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "FK_BIZ_CIR_businessId"))
